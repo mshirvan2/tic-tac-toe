@@ -1,3 +1,13 @@
+const rockChoice = document.getElementById("rock");
+const paperChoice = document.getElementById("paper");
+const scissorsChoice = document.getElementById("scissors");
+let displayResult = document.getElementById("results");
+let count = document.getElementById("score");
+let userScore = 0;
+let cpuScore = 0;
+let message = "";
+
+
 function getCpuChoice(){
     
     let cpuChoice = Math.floor(Math.random() * 3) + 1;
@@ -17,61 +27,48 @@ function getCpuChoice(){
     
 }
 
-function getUserChoice(){
-    
-    let getUserChoice = prompt("Please enter Rock, Paper, or Scissors: ");
 
-    return getUserChoice.toLowerCase();
-}
 
 function playRound(userChoice, cpuChoice){
 
-    console.log(`you chose ${userChoice} and cpu chose ${cpuChoice}`);
+    const choiceResult = document.createElement("p");
+    displayResult.appendChild(choiceResult);
+    choiceResult.textContent = `you chose ${userChoice} and cpu chose ${cpuChoice}`;
+
+
 
     if(userChoice == "rock" && cpuChoice == "scissors" || 
         userChoice == "paper" && cpuChoice == "rock" ||
         userChoice == "scissors" && cpuChoice == "paper"
     ){
-        console.log("You win!!");
+        message = document.createElement("p")
+        displayResult.appendChild(message);
+        message.textContent ="You win!!";
         userScore++
     }
     else if(userChoice == cpuChoice){
-        return console.log("Tie")
+       message = document.createElement("p")
+        displayResult.appendChild(message);
+         message.textContent = "Tie";
     }
     else {
-        console.log("You Lose!!");
+       message = document.createElement("p")
+        displayResult.appendChild(message);
+        message.textContent = "You Lose";
         cpuScore++;
     }
+
+    count.textContent = `Score: ${userScore} vs ${cpuScore}`;
 }
 
-function playGame(){
-    
-    console.log("Lets start the game");
+rockChoice.addEventListener("click", () => {
+    playRound("rock", getCpuChoice());
+});
 
-    console.log("We will play up to 5");
-    console.log(`score is ${userScore} vs ${cpuScore}`);
+paperChoice.addEventListener("click", () => {
+    playRound("paper", getCpuChoice());
+});
 
-
-    let userChoice = getUserChoice();
-    let cpuChoice =getCpuChoice();
-
-    playRound(userChoice, cpuChoice);
-
-    if(cpuScore == 5){
-        console.log("You Lost the Match")
-    }
-    else if(userScore == 5){
-         console.log("You Win the Match")
-    }
-    else{
-        playGame();
-    }
-
-}
-
-
-
-let userScore = 0;
-let cpuScore = 0;
-
-playGame();
+scissorsChoice.addEventListener("click", () => {
+    playRound("scissors", getCpuChoice());
+});
